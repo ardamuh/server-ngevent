@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const app = express();
 
-// router
+// import router
 const categoriesRouter = require("./app/api/v1/categories/router");
 const imagesRouter = require("./app/api/v1/images/router");
 const talentsRouter = require("./app/api/v1/talents/router");
@@ -18,10 +18,13 @@ const participantsRouter = require("./app/api/v1/participants/router");
 const paymentsRouter = require("./app/api/v1/payments/router");
 const refreshToken = require("./app/api/v1/userRefreshToken/router");
 
+// membaut variabel v1
 const v1 = "/api/v1";
 
+// middlewares
 const notFoundMiddleware = require("./app/middlewares/not-found");
 const handleErrorMiddleware = require("./app/middlewares/handler-error");
+
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
@@ -35,6 +38,7 @@ app.get("/", (req, res) => {
   });
 });
 
+// gunakan router
 app.use(`${v1}/cms`, categoriesRouter);
 app.use(`${v1}/cms`, imagesRouter);
 app.use(`${v1}/cms`, talentsRouter);

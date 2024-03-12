@@ -1,6 +1,9 @@
+// import package mongoose
 const mongoose = require("mongoose");
-const {model, Schema} = mongoose;
+//ambil module model dan Schema dari package mongoose
+const { model, Schema } = mongoose;
 
+// function utk field atribut nama dan organizer
 let categorySchema = Schema(
   {
     name: {
@@ -15,7 +18,7 @@ let categorySchema = Schema(
       required: true,
     },
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
 module.exports = model("Category", categorySchema);

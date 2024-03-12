@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-
+// import services payments
 const {
   getAllPayments,
   createPayments,
@@ -8,18 +8,23 @@ const {
   deletePayments,
 } = require("../../../services/mongoose/payments");
 
+// function create
 const create = async (req, res, next) => {
   try {
+    // simpan payments yang baru dibuat ke MongoDB
     const result = await createPayments(req);
 
+    // response kepada client dengan mengembalikan product yang baru dibuat
     res.status(StatusCodes.CREATED).json({
       data: result,
     });
   } catch (err) {
+    // jika terjadi kesalahan kemudian gunakan method `next` agar Express memproses error tersebut
     next(err);
   }
 };
 
+// function menampilkan semua daftar payments
 const index = async (req, res, next) => {
   try {
     const result = await getAllPayments(req);
@@ -32,6 +37,7 @@ const index = async (req, res, next) => {
   }
 };
 
+// function menampilkan daftar payments berdasarkan id
 const find = async (req, res, next) => {
   try {
     const result = await getOnePayments(req);
@@ -44,6 +50,7 @@ const find = async (req, res, next) => {
   }
 };
 
+// function mengedit daftar payments berdasarkan id
 const update = async (req, res, next) => {
   try {
     const result = await updatePayments(req);
@@ -56,6 +63,7 @@ const update = async (req, res, next) => {
   }
 };
 
+// function menghapus daftar payments berdasarkan id
 const destroy = async (req, res, next) => {
   try {
     const result = await deletePayments(req);
@@ -67,6 +75,7 @@ const destroy = async (req, res, next) => {
   }
 };
 
+// Export function pada controller payments
 module.exports = {
   index,
   find,

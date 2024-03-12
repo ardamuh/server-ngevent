@@ -1,4 +1,5 @@
-const express = require('express');
+// import router dari express
+const express = require("express");
 const router = express();
 const {
   create,
@@ -7,39 +8,42 @@ const {
   index,
   update,
   changeStatus,
-} = require('./controller');
+} = require("./controller");
 
+// import product controller
 const {
   authenticateUser,
   authorizeRoles,
-} = require('../../../middlewares/auth');
+} = require("../../../middlewares/auth");
 
+// pasangkan route endpoint dengan method 'authenticateUser', 'authorizeRoles'
 router.get(
-  '/events',
+  "/events",
   authenticateUser,
-  authorizeRoles('organizer', 'owner'),
+  authorizeRoles("organizer", "owner"),
   index
 );
-router.get('/events/:id', authenticateUser, authorizeRoles('organizer'), find);
+router.get("/events/:id", authenticateUser, authorizeRoles("organizer"), find);
 router.put(
-  '/events/:id',
+  "/events/:id",
   authenticateUser,
-  authorizeRoles('organizer'),
+  authorizeRoles("organizer"),
   update
 );
 router.delete(
-  '/events/:id',
+  "/events/:id",
   authenticateUser,
-  authorizeRoles('organizer'),
+  authorizeRoles("organizer"),
   destroy
 );
-router.post('/events', authenticateUser, authorizeRoles('organizer'), create);
+router.post("/events", authenticateUser, authorizeRoles("organizer"), create);
 
 router.put(
-  '/events/:id/status',
+  "/events/:id/status",
   authenticateUser,
-  authorizeRoles('organizer'),
+  authorizeRoles("organizer"),
   changeStatus
 );
 
+// export router
 module.exports = router;

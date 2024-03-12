@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {model, Schema} = mongoose;
+const { model, Schema } = mongoose;
 
 let talentSchema = Schema(
   {
@@ -11,7 +11,7 @@ let talentSchema = Schema(
       type: String,
       default: "-",
     },
-    // untuk membuat relasi pada mongodb kita perlu membuat types ObjectId
+    // untuk membuat relasi pada mongodb perlu membuat types ObjectId
     image: {
       type: mongoose.Types.ObjectId,
       ref: "Image",
@@ -23,7 +23,7 @@ let talentSchema = Schema(
       required: true,
     },
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
 module.exports = model("Talent", talentSchema);

@@ -1,11 +1,11 @@
-const Images = require('../../api/v1/images/model');
-const { NotFoundError } = require('../../errors');
+const Images = require("../../api/v1/images/model");
+const { NotFoundError } = require("../../errors");
 
 const createImages = async (req) => {
   const result = await Images.create({
     name: req.file
       ? `uploads/${req.file.filename}`
-      : 'uploads/avatar/default.jpeg',
+      : "uploads/avatar/default.jpeg",
   });
 
   return result;
@@ -20,5 +20,5 @@ const checkingImage = async (id) => {
 
   return result;
 };
-// jangan lupa export checkingImage
+// export checkingImage
 module.exports = { createImages, checkingImage };

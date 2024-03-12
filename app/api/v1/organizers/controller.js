@@ -1,3 +1,4 @@
+// import services organizers
 const {
   createOrganizer,
   createUsers,
@@ -5,9 +6,9 @@ const {
   deleteOrganizer,
   updateOrganizer,
   getOneOrganizer,
-} = require('../../../services/mongoose/users');
+} = require("../../../services/mongoose/users");
 
-const { StatusCodes } = require('http-status-codes');
+const { StatusCodes } = require("http-status-codes");
 
 const getCMSUsers = async (req, res, next) => {
   try {
@@ -21,18 +22,23 @@ const getCMSUsers = async (req, res, next) => {
   }
 };
 
+// function create
 const createCMSOrganizer = async (req, res, next) => {
   try {
+    // simpan organizer yang baru dibuat ke MongoDB
     const result = await createOrganizer(req);
 
+    //response kepada client dengan mengembalikan product yang baru dibuat
     res.status(StatusCodes.CREATED).json({
       data: result,
     });
   } catch (error) {
+    // jika terjadi kesalahan kemudian gunakan method `next` agar Express memproses error tersebut
     next(error);
   }
 };
 
+// funciton menampilkan daftar organizer berdasarkan id
 const getOneCMSOrganizer = async (req, res, next) => {
   try {
     const result = await getOneOrganizer(req);
@@ -45,6 +51,7 @@ const getOneCMSOrganizer = async (req, res, next) => {
   }
 };
 
+// function mengedit daftar organizer berdasarkan id
 const updateCMSOrganizer = async (req, res, next) => {
   try {
     const result = await updateOrganizer(req);
@@ -57,6 +64,7 @@ const updateCMSOrganizer = async (req, res, next) => {
   }
 };
 
+// function menghapus daftar organizer berdasarkan id
 const destroyCMSOrganizer = async (req, res, next) => {
   try {
     const result = await deleteOrganizer(req);
@@ -69,6 +77,7 @@ const destroyCMSOrganizer = async (req, res, next) => {
   }
 };
 
+// function create CMSUser
 const createCMSUser = async (req, res, next) => {
   try {
     const result = await createUsers(req);
@@ -81,6 +90,7 @@ const createCMSUser = async (req, res, next) => {
   }
 };
 
+// Export function pada controller CMS
 module.exports = {
   createCMSOrganizer,
   createCMSUser,

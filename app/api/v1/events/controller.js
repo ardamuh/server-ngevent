@@ -1,3 +1,4 @@
+// import services categories
 const {
   getAllEvents,
   getOneEvents,
@@ -9,18 +10,23 @@ const {
 
 const { StatusCodes } = require("http-status-codes");
 
+// function create
 const create = async (req, res, next) => {
   try {
+    // simpan events yang baru dibuat ke MongoDB
     const result = await createEvents(req);
 
+    // response kepada client dengan mengembalikan product yang baru dibuat
     res.status(StatusCodes.CREATED).json({
       data: result,
     });
   } catch (err) {
+    // jika terjadi kesalahan kemudian gunakan method `next` agar Express memproses error tersebut
     next(err);
   }
 };
 
+// function menampilkan semua daftar events
 const index = async (req, res, next) => {
   try {
     const result = await getAllEvents(req);
@@ -33,6 +39,7 @@ const index = async (req, res, next) => {
   }
 };
 
+// function menampilkan daftar events berdasarkan id
 const find = async (req, res, next) => {
   try {
     const result = await getOneEvents(req);
@@ -45,6 +52,7 @@ const find = async (req, res, next) => {
   }
 };
 
+// function mengedit daftar events berdasarkan id
 const update = async (req, res, next) => {
   try {
     const result = await updateEvents(req);
@@ -57,6 +65,7 @@ const update = async (req, res, next) => {
   }
 };
 
+// function menghapus daftar categories berdasarkan id
 const destroy = async (req, res, next) => {
   try {
     const result = await deleteEvents(req);
@@ -69,6 +78,7 @@ const destroy = async (req, res, next) => {
   }
 };
 
+// function mengubah status events
 const changeStatus = async (req, res, next) => {
   try {
     const result = await changeStatusEvents(req);
@@ -81,6 +91,7 @@ const changeStatus = async (req, res, next) => {
   }
 };
 
+// Export function pada controller events
 module.exports = {
   index,
   find,

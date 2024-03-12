@@ -1,24 +1,30 @@
-const { StatusCodes } = require('http-status-codes');
+const { StatusCodes } = require("http-status-codes");
+// import services categories
 const {
   getAllCategories,
   createCategories,
   getOneCategories,
   updateCategories,
   deleteCategories,
-} = require('../../../services/mongoose/categories');
+} = require("../../../services/mongoose/categories");
 
+// function create
 const create = async (req, res, next) => {
   try {
+    // simpan category yang baru dibuat ke MongoDB
     const result = await createCategories(req);
 
+    //response kepada client dengan mengembalikan product yang baru dibuat
     res.status(StatusCodes.CREATED).json({
       data: result,
     });
   } catch (error) {
+    // jika terjadi kesalahan kemudian gunakan method `next` agar Express memproses error tersebut
     next(error);
   }
 };
 
+// function menampilkan semua daftar categories
 const index = async (req, res, next) => {
   try {
     const result = await getAllCategories(req);
@@ -31,6 +37,7 @@ const index = async (req, res, next) => {
   }
 };
 
+// function menampilkan daftar categories berdasarkan id
 const find = async (req, res, next) => {
   try {
     const result = await getOneCategories(req);
@@ -43,6 +50,7 @@ const find = async (req, res, next) => {
   }
 };
 
+// function mengedit daftar categories berdasarkan id
 const update = async (req, res, next) => {
   try {
     const result = await updateCategories(req);
@@ -55,6 +63,7 @@ const update = async (req, res, next) => {
   }
 };
 
+// function menghapus daftar categories berdasarkan id
 const destroy = async (req, res, next) => {
   try {
     const result = await deleteCategories(req);
@@ -67,4 +76,5 @@ const destroy = async (req, res, next) => {
   }
 };
 
+// Export function pada controller categories
 module.exports = { index, find, update, destroy, create };

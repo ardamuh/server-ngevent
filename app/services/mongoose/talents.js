@@ -1,9 +1,9 @@
 // import model Talents
-const Talents = require('../../api/v1/talents/model');
-const { checkingImage } = require('./images');
+const Talents = require("../../api/v1/talents/model");
+const { checkingImage } = require("./images");
 
 // import custom error not found dan bad request
-const { NotFoundError, BadRequestError } = require('../../errors');
+const { NotFoundError, BadRequestError } = require("../../errors");
 
 const getAllTalents = async (req) => {
   const { keyword } = req.query;
@@ -13,15 +13,15 @@ const getAllTalents = async (req) => {
   };
 
   if (keyword) {
-    condition = { ...condition, name: { $regex: keyword, $options: 'i' } };
+    condition = { ...condition, name: { $regex: keyword, $options: "i" } };
   }
 
   const result = await Talents.find(condition)
     .populate({
-      path: 'image',
-      select: '_id name',
+      path: "image",
+      select: "_id name",
     })
-    .select('_id name role image');
+    .select("_id name role image");
 
   return result;
 };
@@ -32,11 +32,11 @@ const createTalents = async (req) => {
   // cari image dengan field image
   await checkingImage(image);
 
-  // cari talents dengan field name
+  // cari talents dengan field name dan id selain dari yang dikirm dari params
   const check = await Talents.findOne({ name, organizer: req.user.organizer });
 
-  // apa bila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara sudah terdaftar
-  if (check) throw new BadRequestError('pembicara sudah terdaftar');
+  // apabila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara sudah terdaftar
+  if (check) throw new BadRequestError("pembicara sudah terdaftar");
 
   const result = await Talents.create({
     name,
@@ -56,10 +56,10 @@ const getOneTalents = async (req) => {
     organizer: req.user.organizer,
   })
     .populate({
-      path: 'image',
-      select: '_id name',
+      path: "image",
+      select: "_id name",
     })
-    .select('_id name role image');
+    .select("_id name role image");
 
   if (!result)
     throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
@@ -74,15 +74,6 @@ const updateTalents = async (req) => {
   // cari image dengan field image
   await checkingImage(image);
 
-  // jika id result false / null maka akan menampilkan error `Tidak ada pembicara dengan id` yang dikirim client
-  // const checkTalent = await Talents.findOne({
-  //   _id: id,
-  //   organizer: req.user.organizer,
-  // });
-
-  // if (!checkTalent)
-  //   throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
-
   // cari talents dengan field name dan id selain dari yang dikirim dari params
   const check = await Talents.findOne({
     name,
@@ -90,8 +81,8 @@ const updateTalents = async (req) => {
     _id: { $ne: id },
   });
 
-  // apa bila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara sudah terdaftar
-  if (check) throw new BadRequestError('pembicara sudah terdaftar');
+  // apabila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara sudah terdaftar
+  if (check) throw new BadRequestError("pembicara sudah terdaftar");
 
   const result = await Talents.findOneAndUpdate(
     { _id: id },
@@ -99,6 +90,7 @@ const updateTalents = async (req) => {
     { new: true, runValidators: true }
   );
 
+  // jika id result false / null maka akan menampilkan error `Tidak ada pembicara dengan id` yang dikirim client
   if (!result)
     throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
 
